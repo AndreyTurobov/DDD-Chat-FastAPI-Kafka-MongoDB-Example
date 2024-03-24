@@ -1,12 +1,13 @@
 from abc import ABC
 from dataclasses import dataclass, field
+from uuid import UUID
 
-from uuid_extensions import uuid7str
+from uuid_extensions import uuid7
 
 
 @dataclass
 class BaseEvent(ABC):
-    event_id: str = field(
-        default_factory=lambda: uuid7str(),
+    event_id: UUID = field(
+        default_factory=uuid7,
         kw_only=True,
     )

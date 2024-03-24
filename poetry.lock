@@ -94,6 +94,17 @@ python-versions = ">=3.5"
 tests = ["asttokens (>=2.1.0)", "ipython", "pytest", "coverage", "coverage-enable-subprocess", "littleutils", "rich"]
 
 [[package]]
+name = "faker"
+version = "24.3.0"
+description = "Faker is a Python package that generates fake data for you."
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+python-dateutil = ">=2.4"
+
+[[package]]
 name = "fastapi"
 version = "0.110.0"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
@@ -378,6 +389,17 @@ docs = ["sphinx (>=5.3)", "sphinx-rtd-theme (>=1.0)"]
 testing = ["coverage (>=6.2)", "hypothesis (>=5.7.1)"]
 
 [[package]]
+name = "python-dateutil"
+version = "2.9.0.post0"
+description = "Extensions to the standard Python datetime module"
+category = "dev"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+
+[package.dependencies]
+six = ">=1.5"
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -477,7 +499,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.12"
-content-hash = "b7f1727f154624760fd8daeb0e2f6ff3c443cd67155219e51bf5d2c428349a94"
+content-hash = "5ade55ba3c51e560c85b967db6e8f07dc4f0fc16dfa9dbf45dfd0c83d85c096a"
 
 [metadata.files]
 annotated-types = []
@@ -488,6 +510,7 @@ colorama = []
 decorator = []
 dnspython = []
 executing = []
+faker = []
 fastapi = []
 h11 = []
 idna = []
@@ -509,6 +532,7 @@ pygments = []
 pymongo = []
 pytest = []
 pytest-asyncio = []
+python-dateutil = []
 six = []
 sniffio = []
 stack-data = []
