@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
-from app.domain.entities.messages import Chat
-from app.domain.values.messages import Title
-from app.infra.repositories.messages import BaseChatRepository
-from app.logic.commands.base import BaseCommand, CommandHandler
-from app.logic.exceptions.messages import ChatWithThatTitleAlreadyExistsException
+from domain.entities.messages import Chat
+from domain.values.messages import Title
+from infra.repositories.messages import BaseChatRepository
+from logic.commands.base import BaseCommand, CommandHandler
+from logic.exceptions.messages import ChatWithThatTitleAlreadyExistsException
 
 
 @dataclass(frozen=True)

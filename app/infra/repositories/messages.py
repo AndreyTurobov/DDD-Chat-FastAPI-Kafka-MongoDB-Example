@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 
-from app.domain.entities.messages import Chat
+from domain.entities.messages import Chat
 
 
 @dataclass

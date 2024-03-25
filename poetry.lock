@@ -287,6 +287,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "punq"
+version = "0.7.0"
+description = "An IOC Container for Python 3.8+"
+category = "main"
+optional = false
+python-versions = ">=3.8.1,<4.0"
+
+[[package]]
 name = "pure-eval"
 version = "0.2.2"
 description = "Safely evaluate AST nodes without side effects"
@@ -499,7 +507,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.12"
-content-hash = "5ade55ba3c51e560c85b967db6e8f07dc4f0fc16dfa9dbf45dfd0c83d85c096a"
+content-hash = "216fb8ee1603015570475b618ba92d7834fb78d70cc9d734fff90edb8226e9e4"
 
 [metadata.files]
 annotated-types = []
@@ -525,6 +533,7 @@ pexpect = []
 pluggy = []
 prompt-toolkit = []
 ptyprocess = []
+punq = []
 pure-eval = []
 pydantic = []
 pydantic-core = []

@@ -1,9 +1,9 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 
-from app.domain.entities.base import BaseEntity
-from app.domain.events.messages import NewMessageReceivedEvent, NewChatCreated
-from app.domain.values.messages import Text, Title
+from domain.entities.base import BaseEntity
+from domain.events.messages import NewMessageReceivedEvent, NewChatCreated
+from domain.values.messages import Text, Title
 
 
 @dataclass(eq=False)

@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 
 from uuid_extensions import uuid7str
 
-from app.domain.events.base import BaseEvent
+from domain.events.base import BaseEvent
 
 
 @dataclass

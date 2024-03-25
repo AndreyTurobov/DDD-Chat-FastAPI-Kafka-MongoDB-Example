@@ -2,7 +2,7 @@ from abc import ABC
 from dataclasses import dataclass
 from typing import TypeVar, Any, Generic
 
-from app.domain.events.base import BaseEvent
+from domain.events.base import BaseEvent
 
 
 ET = TypeVar("ET", bound=BaseEvent)

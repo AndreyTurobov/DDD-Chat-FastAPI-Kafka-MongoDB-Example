@@ -2,10 +2,10 @@ from collections import defaultdict
 from collections.abc import Iterable
 from dataclasses import dataclass, field
 
-from app.domain.events.base import BaseEvent
-from app.logic.commands.base import CT, CommandHandler, CR, BaseCommand
-from app.logic.events.base import ET, EventHandler, ER
-from app.logic.exceptions.mediator import CommandHandlersNotRegisteredException, EventHandlersNotRegisteredException
+from domain.events.base import BaseEvent
+from logic.commands.base import CT, CommandHandler, CR, BaseCommand
+from logic.events.base import ET, EventHandler, ER
+from logic.exceptions.mediator import CommandHandlersNotRegisteredException, EventHandlersNotRegisteredException
 
 
 @dataclass(eq=False)
@@ -22,7 +22,7 @@ class Mediator:
     def register_event(self, event: ET, event_handlers: Iterable[EventHandler[ET, ER]]):
         self.events_map[event].append(event_handlers)
 
-    def register_command(self, command: CT, event_handlers: Iterable[EventHandler[CT, CR]]):
+    def register_command(self, command: CT, event_handlers: Iterable[CommandHandler[CT, CR]]):
         self.commands_map[command].extend(event_handlers)
 
     async def handle_event(self, event: BaseEvent) -> Iterable[ER]:
