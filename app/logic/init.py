@@ -18,7 +18,7 @@ def _init_container() -> Container:
     container.register(CreateChatCommandHandler)
 
     def init_mediator():
-        mediator = Mediator(),
+        mediator = Mediator()
         mediator.register_command(
             CreateChatCommand,
             [container.resolve(CreateChatCommandHandler)],

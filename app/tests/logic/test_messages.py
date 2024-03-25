@@ -2,12 +2,12 @@ import pytest
 
 from faker import Faker
 
-from app.domain.entities.messages import Chat
-from app.domain.values.messages import Title
-from app.infra.repositories.messages import BaseChatRepository
-from app.logic.commands.messages import CreateChatCommand
-from app.logic.exceptions.messages import ChatWithThatTitleAlreadyExistsException
-from app.logic.mediator import Mediator
+from domain.entities.messages import Chat
+from domain.values.messages import Title
+from infra.repositories.messages import BaseChatRepository
+from logic.commands.messages import CreateChatCommand
+from logic.exceptions.messages import ChatWithThatTitleAlreadyExistsException
+from logic.mediator import Mediator
 
 
 @pytest.mark.asyncio
