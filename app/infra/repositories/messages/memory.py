@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
 
 from domain.entities.messages import Chat
-from infra.repositories.messages.base import BaseChatRepository
+from infra.repositories.messages.base import BaseChatsRepository
 
 
 @dataclass
-class MemoryChatRepository(BaseChatRepository):
+class MemoryChatRepository(BaseChatsRepository):
     _saved_chats: list[Chat] = field(
         default_factory=list,
         kw_only=True,
