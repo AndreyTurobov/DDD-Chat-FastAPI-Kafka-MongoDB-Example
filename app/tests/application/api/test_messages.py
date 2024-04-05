@@ -44,11 +44,9 @@ async def test_create_chat_fail_text_too_long(
 async def test_create_chat_fail_text_empty(
     app: FastAPI,
     client: TestClient,
-    faker: Faker,
 ):
     url = app.url_path_for("create_chat_handler")
-    title = ""
-    response: Response = client.post(url=url, json={"title": title})
+    response: Response = client.post(url=url, json={"title": ""})
 
     assert response.status_code == status.HTTP_400_BAD_REQUEST, response.json()
     json_data = response.json()

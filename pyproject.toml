@@ -11,6 +11,7 @@ uvicorn = "^0.28.1"
 motor = "^3.3.2"
 uuid7 = "^0.1.0"
 punq = "^0.7.0"
+pydantic-settings = "^2.2.1"
 
 [tool.poetry.dev-dependencies]
 ipython = "^8.22.2"
