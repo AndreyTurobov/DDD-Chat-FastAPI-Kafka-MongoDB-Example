@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Iterable
+
 from pydantic import BaseModel
 
 from domain.entities.messages import Chat, Message
@@ -32,4 +35,34 @@ class CreateMessageResponseSchema(BaseModel):
         return CreateMessageResponseSchema(
             text=message.text.as_generic_type(),
             oid=message.oid,
+        )
+
+
+class MessageDetailSchema(BaseModel):
+    oid: str
+    text: str
+    created_at: datetime
+
+    @classmethod
+    def from_entity(cls, message: Message) -> "MessageDetailSchema":
+        return MessageDetailSchema(
+            oid=message.oid,
+            text=message.text.as_generic_type(),
+            created_at=message.created_at,
+        )
+
+
+class ChatDetailSchema(BaseModel):
+    oid: str
+    title: str
+    created_at: datetime
+    messages: Iterable[MessageDetailSchema]
+
+    @classmethod
+    def from_entity(cls, chat: Chat) -> "ChatDetailSchema":
+        return ChatDetailSchema(
+            oid=chat.oid,
+            title=chat.title.as_generic_type(),
+            created_at=chat.created_at,
+            messages=[MessageDetailSchema.from_entity(message) for message in chat.messages],
         )
