@@ -1,15 +1,21 @@
 from functools import lru_cache
-
 from punq import Container, Scope
 
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from infra.repositories.messages.base import BaseChatsRepository, BaseMessagesRepository
 from infra.repositories.messages.mongo import MongoDBChatsRepository, MongoDBMessagesRepository
-from logic.commands.messages import CreateChatCommand, CreateChatCommandHandler, CreateMessageCommand, \
-    CreateMessageCommandHandler
+from logic.commands.messages import (
+    CreateChatCommand,
+    CreateChatCommandHandler,
+    CreateMessageCommand,
+    CreateMessageCommandHandler,)
 from logic.mediator import Mediator
-from logic.queries.messages import GetChatDetailQueryHandler, GetChatDetailQuery
+from logic.queries.messages import (
+    GetChatDetailQueryHandler,
+    GetChatDetailQuery,
+    GetMessagesQuery,
+    GetMessagesQueryHandler)
 from settings.config import Config
 
 
@@ -30,7 +36,6 @@ def _init_container() -> Container:
 
     container.register(AsyncIOMotorClient, factory=create_mongodb_client, scope=Scope.singleton)
 
-
     client = container.resolve(AsyncIOMotorClient)
 
     def init_chats_mongodb_repository() -> BaseChatsRepository:
@@ -44,7 +49,7 @@ def _init_container() -> Container:
         return MongoDBMessagesRepository(
             mongo_db_client=client,
             mongo_db_db_name=config.mongodb_chat_database,
-            mongo_db_collection_name=config.mongodb_chat_collection,
+            mongo_db_collection_name=config.mongodb_messages_collection,
         )
 
     container.register(BaseChatsRepository, factory=init_chats_mongodb_repository, scope=Scope.singleton)
@@ -52,7 +57,9 @@ def _init_container() -> Container:
 
     container.register(CreateChatCommandHandler)
     container.register(CreateMessageCommandHandler)
+
     container.register(GetChatDetailQueryHandler)
+    container.register(GetMessagesQueryHandler)
 
     def init_mediator() -> Mediator:
         mediator = Mediator()
@@ -67,6 +74,10 @@ def _init_container() -> Container:
         mediator.register_query(
             GetChatDetailQuery,
             container.resolve(GetChatDetailQueryHandler),
+        )
+        mediator.register_query(
+            GetMessagesQuery,
+            container.resolve(GetMessagesQueryHandler),
         )
 
         return mediator

@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import pytest
+from uuid_extensions import uuid7str
 
 from domain.events.messages import NewMessageReceivedEvent
 from domain.exceptions.messages import TitleTooLongException
@@ -11,7 +12,7 @@ from domain.entities.messages import Message, Chat
 def test_create_message_success_short_text():
 
     text = Text("text")
-    message = Message(text=text)
+    message = Message(text=text, chat_oid=uuid7str())
 
     assert message.text == text
     assert message.created_at.date() == datetime.today().date()
@@ -20,7 +21,7 @@ def test_create_message_success_short_text():
 def test_create_message_success_long_text():
 
     text = Text("text" * 100)
-    message = Message(text=text)
+    message = Message(text=text, chat_oid=uuid7str())
 
     assert message.text == text
     assert message.created_at.date() == datetime.today().date()
@@ -47,7 +48,7 @@ def test_add_chat_to_messages():
     title = Title("title")
     chat = Chat(title=title)
 
-    message = Message(text=Text("text"))
+    message = Message(text=Text("text"), chat_oid=chat.oid)
     chat.add_message(message)
 
     assert message in chat.messages
@@ -58,7 +59,7 @@ def test_new_message_events():
     title = Title("title")
     chat = Chat(title=title)
 
-    message = Message(text=Text("text"))
+    message = Message(text=Text("text"), chat_oid=chat.oid)
     chat.add_message(message)
 
     events = chat.pull_events()

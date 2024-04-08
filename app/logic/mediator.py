@@ -47,7 +47,6 @@ class Mediator:
 
         return result
 
-
     async def handle_command(self, command: BaseCommand) -> Iterable[CR]:
         command_type = command.__class__
         handlers: list[CommandHandler] | None = self.commands_map.get(command_type)
@@ -56,7 +55,6 @@ class Mediator:
             raise CommandHandlersNotRegisteredException(command_type)
 
         return [await handler.handle(command) for handler in handlers]
-
 
     async def handle_query(self, query: BaseQuery) -> QR:
         return await self.queries_map[query.__class__].handle(query=query)
