@@ -11,6 +11,10 @@ APP_CONTAINER = main-app
 all:
 	${DC} -f ${STORAGES_FILE} -f ${APP_FILE} ${ENV} up --build -d
 
+.PHONY: clean
+clean:
+	${DC} -f ${STORAGES_FILE} -f ${APP_FILE} down
+
 .PHONY: app
 app:
 	${DC} -f ${APP_FILE} ${ENV} up --build -d

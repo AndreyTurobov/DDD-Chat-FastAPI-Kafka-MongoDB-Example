@@ -7,6 +7,8 @@ This is the basic sample for FastAPI application configured to use Docker Compos
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [GNU Make](https://www.gnu.org/software/make/)
+- [MongoDB](https://www.mongodb.com/docs/drivers/python-drivers/)
+- [Mongo-Express](https://github.com/mongo-express/mongo-express)
 
 ## How to Use
 
@@ -21,10 +23,14 @@ This is the basic sample for FastAPI application configured to use Docker Compos
 
 ### Implemented Commands
 
-* `make app` - up application and database/infrastructure
+* `make app` - up application 
 * `make app-logs` - follow the logs in app container
-* `make app-down` - down application and all infrastructure
+* `make app-down` - down application
 * `make app-shell` - go to containerized interactive shell (bash)
+* `make storages` - up database/infrastructure
+* `make storages-down` - down database/infrastructure
+* `make all` - up both application and database/infrastructure 
+* `make clean` - down both application and database/infrastructure
 
 ### Most Used Specific Commands
 
