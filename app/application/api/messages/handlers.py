@@ -8,15 +8,15 @@ from application.api.messages.filters import GetMessagesFilters
 from application.api.schemas import ErrorSchema
 from domain.exceptions.base import ApplicationException
 from logic.commands.messages import CreateChatCommand, CreateMessageCommand
-from logic.mediator import Mediator
+from logic.mediator.base import Mediator
 from application.api.messages.schemas import (
     CreateChatResponseSchema,
     CreateChatRequestSchema,
+    MessageDetailSchema,
+    GetMessagesQueryResponseSchema,
     CreateMessageRequestSchema,
     CreateMessageResponseSchema,
     ChatDetailSchema,
-    MessageDetailSchema,
-    GetMessagesQueryResponseSchema,
 )
 from logic.init import init_container
 from logic.queries.messages import GetChatDetailQuery, GetMessagesQuery
