@@ -38,16 +38,13 @@ class Mediator(EventMediator, CommandMediator, QueryMediator):
 
     async def publish(self, events: Iterable[BaseEvent]) -> Iterable[ER]:
         result = []
-
         for event in events:
-            handlers: Iterable[EventHandler] = self.events_map(event.__class__)
+            handlers: Iterable[EventHandler] = self.events_map[event.__class__]
 
             for handler in handlers:
                 result.append(await handler.handle(event=event))
 
             result.extend([await handler.handle(event) for handler in handlers])
-
-        await self.message_broker.send_message()
 
         return result
 

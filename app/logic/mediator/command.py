@@ -18,6 +18,6 @@ class CommandMediator(ABC):
         ...
 
     @abstractmethod
-    async def handle_command(self, command: BaseCommand) -> CR:
+    async def handle_command(self, command: BaseCommand) -> Iterable[CR]:
         ...
 
