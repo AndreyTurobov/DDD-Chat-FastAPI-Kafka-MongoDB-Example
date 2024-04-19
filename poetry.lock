@@ -614,10 +614,18 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[[package]]
+name = "websockets"
+version = "12.0"
+description = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.12"
-content-hash = "d5e0c23c1b39e920f6da7b3e343ef07bed9e4f6e832257e599504a3b89ae0c14"
+content-hash = "d4c8eab6fd21c745758b4448484fdff042e1eeec5fdd1f3b684342bdc203636e"
 
 [metadata.files]
 aiokafka = []
@@ -669,3 +677,4 @@ typing-extensions = []
 uuid7 = []
 uvicorn = []
 wcwidth = []
+websockets = []
