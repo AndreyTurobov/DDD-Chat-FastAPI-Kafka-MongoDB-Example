@@ -1,15 +1,32 @@
 from collections import defaultdict
 from collections.abc import Iterable
-from dataclasses import dataclass, field
+from dataclasses import (
+    dataclass,
+    field,
+)
 
 from domain.events.base import BaseEvent
-from logic.commands.base import CT, CommandHandler, CR, BaseCommand
-from logic.events.base import ET, EventHandler, ER
+from logic.commands.base import (
+    CR,
+    CT,
+    BaseCommand,
+    CommandHandler,
+)
+from logic.events.base import (
+    ER,
+    ET,
+    EventHandler,
+)
 from logic.exceptions.mediator import CommandHandlersNotRegisteredException
 from logic.mediator.command import CommandMediator
 from logic.mediator.event import EventMediator
 from logic.mediator.query import QueryMediator
-from logic.queries.base import QT, BaseQueryHandler, QR, BaseQuery
+from logic.queries.base import (
+    QR,
+    QT,
+    BaseQuery,
+    BaseQueryHandler,
+)
 
 
 @dataclass(eq=False)
@@ -30,7 +47,11 @@ class Mediator(EventMediator, CommandMediator, QueryMediator):
     def register_event(self, event: ET, event_handlers: Iterable[EventHandler[ET, ER]]):
         self.events_map[event].extend(event_handlers)
 
-    def register_command(self, command: CT, command_handlers: Iterable[CommandHandler[CT, CR]]):
+    def register_command(
+        self,
+        command: CT,
+        command_handlers: Iterable[CommandHandler[CT, CR]],
+    ):
         self.commands_map[command].extend(command_handlers)
 
     def register_query(self, query: QT, query_handler: BaseQueryHandler[QT, QR]) -> QR:

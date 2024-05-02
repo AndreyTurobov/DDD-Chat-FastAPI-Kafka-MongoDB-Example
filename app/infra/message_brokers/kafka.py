@@ -1,4 +1,7 @@
-from dataclasses import dataclass, field
+from dataclasses import (
+    dataclass,
+    field,
+)
 from typing import AsyncIterator
 
 from aiokafka import AIOKafkaConsumer

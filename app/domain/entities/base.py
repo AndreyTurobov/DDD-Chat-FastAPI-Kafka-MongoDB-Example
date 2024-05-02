@@ -1,6 +1,9 @@
 from abc import ABC
 from copy import copy
-from dataclasses import dataclass, field
+from dataclasses import (
+    dataclass,
+    field,
+)
 from datetime import datetime
 
 from uuid_extensions import uuid7str
@@ -37,4 +40,3 @@ class BaseEntity(ABC):
         self._events.clear()
 
         return registered_events
-

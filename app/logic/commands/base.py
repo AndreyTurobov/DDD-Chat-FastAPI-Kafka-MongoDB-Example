@@ -1,13 +1,19 @@
-from abc import ABC, abstractmethod
+from abc import (
+    ABC,
+    abstractmethod,
+)
 from dataclasses import dataclass
-from typing import TypeVar, Generic, Any
+from typing import (
+    Any,
+    Generic,
+    TypeVar,
+)
 
 from logic.mediator.event import EventMediator
 
 
 @dataclass(frozen=True)
-class BaseCommand(ABC):
-    ...
+class BaseCommand(ABC): ...
 
 
 CT = TypeVar("CT", bound=BaseCommand)
@@ -19,5 +25,4 @@ class CommandHandler(ABC, Generic[CT, CR]):
     _mediator: EventMediator
 
     @abstractmethod
-    async def handle(self, command: CT) -> CR:
-        ...
+    async def handle(self, command: CT) -> CR: ...

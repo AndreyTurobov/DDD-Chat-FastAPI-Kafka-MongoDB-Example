@@ -1,5 +1,5 @@
-from pytest import fixture
 from punq import Container
+from pytest import fixture
 
 from infra.repositories.messages.base import BaseChatsRepository
 from logic.mediator.base import Mediator
@@ -13,7 +13,6 @@ def container() -> Container:
 
 @fixture()
 def mediator(container: Container) -> Mediator:
-
     return container.resolve(Mediator)
 
 

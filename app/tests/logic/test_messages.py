@@ -1,6 +1,5 @@
-import pytest
-
 from faker import Faker
+import pytest
 
 from domain.entities.messages import Chat
 from domain.values.messages import Title
@@ -16,11 +15,14 @@ async def test_create_chat_command_success(
     mediator: Mediator,
     faker: Faker,
 ):
-
     chat: Chat
-    chat, *_ = await mediator.handle_command(CreateChatCommand(title=faker.text(max_nb_chars=50)))
+    chat, *_ = await mediator.handle_command(
+        CreateChatCommand(title=faker.text(max_nb_chars=50)),
+    )
 
-    assert await chat_repository.check_chat_exists_by_title(title=chat.title.as_generic_type())
+    assert await chat_repository.check_chat_exists_by_title(
+        title=chat.title.as_generic_type(),
+    )
 
 
 @pytest.mark.asyncio

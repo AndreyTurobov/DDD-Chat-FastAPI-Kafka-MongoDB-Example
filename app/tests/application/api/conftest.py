@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+
 import pytest
 
 from application.api.main import create_app
@@ -17,5 +18,4 @@ def app() -> FastAPI:
 
 @pytest.fixture
 def client(app: FastAPI) -> TestClient:
-
     return TestClient(app=app)

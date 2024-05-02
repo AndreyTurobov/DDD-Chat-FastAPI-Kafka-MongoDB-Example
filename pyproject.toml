@@ -15,6 +15,7 @@ pydantic-settings = "^2.2.1"
 aiokafka = "^0.10.0"
 orjson = "^3.10.1"
 websockets = "^12.0"
+aiojobs = "^1.2.1"
 
 [tool.poetry.dev-dependencies]
 ipython = "^8.22.2"
@@ -22,7 +23,59 @@ pytest = "^8.1.1"
 pytest-asyncio = "^0.23.6"
 Faker = "^24.3.0"
 httpx = "^0.27.0"
+pre-commit = "^3.7.0"
+ruff = "^0.4.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-builtins
+    "A",
+    # flake8-async
+    "ASYNC",
+    # flake8-bugbear
+    "B",
+    # flake8-commas
+    "COM",
+    # flake8-comprehensions
+    "C4",
+    # flake8-debugger
+    "T10",
+    # flake8-eradicate
+    "ERA",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+extend-ignore = [
+    "B008",
+    "B024",
+    "E111",
+    "E114",
+    "E117",
+    "COM812",
+    "COM819",
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.isort.sections]
+"fastapi" = ["fastapi", "starlette"]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+known-third-party = ["aiojobs", "aiokafka", "motor", "orjson", "punq"]
+known-first-party = ["application","domain","infra","logic","settings","tests"]
+section-order = [ "future", "standard-library", "fastapi", "third-party", "first-party", "local-folder" ]
