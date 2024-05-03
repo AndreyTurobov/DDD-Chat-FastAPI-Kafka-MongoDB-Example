@@ -30,52 +30,96 @@ ruff = "^0.4.2"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.ruff.format]
+docstring-code-format = true
+
 [tool.ruff.lint]
 select = [
-    # pycodestyle
-    "E",
     # Pyflakes
     "F",
+    # pycodestyle
+    "E",
+    # isort
+    "I",
+    # pep8-naming
+    "N",
+    # pydocstyle
+    "D",
     # pyupgrade
     "UP",
-    # flake8-builtins
-    "A",
     # flake8-async
     "ASYNC",
     # flake8-bugbear
     "B",
+    # flake8-builtins
+    "A",
     # flake8-commas
     "COM",
     # flake8-comprehensions
     "C4",
     # flake8-debugger
     "T10",
-    # flake8-eradicate
-    "ERA",
     # flake8-simplify
     "SIM",
-    # isort
-    "I",
+    # eradicate
+    "ERA",
+    # Pylint
+    "PL",
 ]
 
 extend-ignore = [
+    "W191",
     "B008",
     "B024",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D203",
+    "D206",
+    "D213",
+    "D300",
     "E111",
     "E114",
     "E117",
+    "N818",
     "COM812",
     "COM819",
 ]
 
-[tool.ruff.format]
-docstring-code-format = true
-
 [tool.ruff.lint.isort.sections]
-"fastapi" = ["fastapi", "starlette"]
+"fastapi" = [
+    "fastapi",
+    "starlette",
+]
 
 [tool.ruff.lint.isort]
 force-sort-within-sections = true
-known-third-party = ["aiojobs", "aiokafka", "motor", "orjson", "punq"]
-known-first-party = ["application","domain","infra","logic","settings","tests"]
-section-order = [ "future", "standard-library", "fastapi", "third-party", "first-party", "local-folder" ]
+known-third-party = [
+    "aiojobs",
+    "aiokafka",
+    "motor",
+    "orjson",
+    "punq",
+]
+known-first-party = [
+    "application",
+    "domain",
+    "infra",
+    "logic",
+    "settings",
+    "tests",
+]
+section-order = [
+    "future",
+    "standard-library",
+    "fastapi",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

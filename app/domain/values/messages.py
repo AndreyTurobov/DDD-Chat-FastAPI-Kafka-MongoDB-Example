@@ -22,10 +22,13 @@ class Text(BaseValueObject):
 @dataclass(frozen=True)
 class Title(BaseValueObject):
     def validate(self) -> None:
+        min_length = 3
+        max_length = 255
+
         if not self.value:
             raise EmptyTextException()
 
-        if len(self.value) > 255:
+        if min_length > len(self.value) > max_length:
             raise TitleTooLongException(self.value)
 
     def as_generic_type(self) -> str:

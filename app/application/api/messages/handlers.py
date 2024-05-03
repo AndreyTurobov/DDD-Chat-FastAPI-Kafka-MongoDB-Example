@@ -46,7 +46,7 @@ async def create_chat_handler(
     schema: CreateChatRequestSchema,
     container: Container = Depends(init_container),
 ) -> CreateChatResponseSchema:
-    """Create new chat"""
+    """Create new chat."""
     mediator: Mediator = container.resolve(Mediator)
 
     try:
@@ -75,7 +75,7 @@ async def create_message_handler(
     schema: CreateMessageRequestSchema,
     container: Container = Depends(init_container),
 ) -> CreateMessageResponseSchema:
-    """Add new message in chat"""
+    """Add new message in chat."""
     mediator: Mediator = container.resolve(Mediator)
 
     try:
@@ -104,7 +104,7 @@ async def get_chat_handler(
     chat_oid: str,
     container: Container = Depends(init_container),
 ) -> ChatDetailSchema:
-    """Get chat by chat_oid"""
+    """Get chat by chat_oid."""
     mediator: Mediator = container.resolve(Mediator)
 
     try:
@@ -132,7 +132,7 @@ async def get_chat_messages_handler(
     filters: GetMessagesFilters = Depends(),
     container: Container = Depends(init_container),
 ) -> GetMessagesQueryResponseSchema:
-    """Get messages in chat by chat_oid"""
+    """Get messages in chat by chat_oid."""
     mediator: Mediator = container.resolve(Mediator)
 
     try:
