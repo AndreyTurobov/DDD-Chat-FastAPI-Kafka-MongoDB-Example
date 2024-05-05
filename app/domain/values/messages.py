@@ -22,8 +22,8 @@ class Text(BaseValueObject):
 @dataclass(frozen=True)
 class Title(BaseValueObject):
     def validate(self) -> None:
-        min_length = 3
-        max_length = 255
+        min_length: int = 3
+        max_length: int = 255
 
         if not self.value:
             raise EmptyTextException()

@@ -44,17 +44,25 @@ class Mediator(EventMediator, CommandMediator, QueryMediator):
         kw_only=True,
     )
 
-    def register_event(self, event: ET, event_handlers: Iterable[EventHandler[ET, ER]]):
+    def register_event(
+        self,
+        event: ET,
+        event_handlers: Iterable[EventHandler[ET, ER]],
+    ) -> Iterable[ER]:
         self.events_map[event].extend(event_handlers)
 
     def register_command(
         self,
         command: CT,
         command_handlers: Iterable[CommandHandler[CT, CR]],
-    ):
+    ) -> Iterable[CR]:
         self.commands_map[command].extend(command_handlers)
 
-    def register_query(self, query: QT, query_handler: BaseQueryHandler[QT, QR]) -> QR:
+    def register_query(
+        self,
+        query: QT,
+        query_handler: BaseQueryHandler[QT, QR],
+    ) -> QR:
         self.queries_map[query] = query_handler
 
     async def publish(self, events: Iterable[BaseEvent]) -> Iterable[ER]:

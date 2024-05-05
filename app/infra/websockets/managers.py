@@ -19,24 +19,24 @@ class BaseConnectionManager(ABC):
     )
 
     @abstractmethod
-    async def accept_connection(self, websocket: WebSocket, key: str): ...
+    async def accept_connection(self, websocket: WebSocket, key: str) -> None: ...
 
     @abstractmethod
-    async def remove_connection(self, websocket: WebSocket, key: str): ...
+    async def remove_connection(self, websocket: WebSocket, key: str) -> None: ...
 
     @abstractmethod
-    async def send_all(self, key: str, bytes_: bytes): ...
+    async def send_all(self, key: str, bytes_: bytes) -> None: ...
 
 
 @dataclass
 class ConnectionManager(BaseConnectionManager):
-    async def accept_connection(self, websocket: WebSocket, key: str):
+    async def accept_connection(self, websocket: WebSocket, key: str) -> None:
         await websocket.accept()
         self.connections_map[key].append(websocket)
 
-    async def remove_connection(self, websocket: WebSocket, key: str):
+    async def remove_connection(self, websocket: WebSocket, key: str) -> None:
         self.connections_map[key].remove(websocket)
 
-    async def send_all(self, key: str, bytes_: bytes):
+    async def send_all(self, key: str, bytes_: bytes) -> None:
         for websocket in self.connections_map[key]:
             await websocket.send_bytes(bytes_)
