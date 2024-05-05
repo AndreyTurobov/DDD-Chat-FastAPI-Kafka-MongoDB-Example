@@ -1,0 +1,15 @@
+**/.git
+.gitignore
+
+**/.mypy_cache
+**/.pytest_cache
+**/.ruff_cache
+
+Dockerfile
+**/docker_compose
+.dockerignore
+
+.idea
+
+*.md
+!README.md

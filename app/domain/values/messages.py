@@ -8,7 +8,7 @@ from domain.values.base import BaseValueObject
 
 
 @dataclass(frozen=True)
-class Text(BaseValueObject):
+class Text(BaseValueObject[str]):
     value: str
 
     def validate(self) -> None:
@@ -20,7 +20,7 @@ class Text(BaseValueObject):
 
 
 @dataclass(frozen=True)
-class Title(BaseValueObject):
+class Title(BaseValueObject[str]):
     def validate(self) -> None:
         min_length: int = 3
         max_length: int = 255

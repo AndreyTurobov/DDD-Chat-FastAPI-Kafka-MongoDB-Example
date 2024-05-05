@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic.main import BaseModel
 
 from application.api.schemas import BaseQueryResponseSchema
 from domain.entities.messages import (
@@ -69,5 +69,11 @@ class ChatDetailSchema(BaseModel):
         )
 
 
-class GetMessagesQueryResponseSchema(BaseQueryResponseSchema):
-    items: list[MessageDetailSchema]
+class GetMessagesQueryResponseSchema(
+    BaseQueryResponseSchema[list[MessageDetailSchema]]
+): ...
+
+
+class GetAllChatsQueryResponseSchema(
+    BaseQueryResponseSchema[list[ChatDetailSchema]]
+): ...

@@ -23,6 +23,11 @@ class BaseChatsRepository(ABC):
     @abstractmethod
     async def add_chat(self, chat: Chat) -> None: ...
 
+    @abstractmethod
+    async def get_all_chats(
+        self, filters: GetMessagesFilters
+    ) -> tuple[Iterable[Chat], int]: ...
+
 
 @dataclass
 class BaseMessagesRepository(ABC):

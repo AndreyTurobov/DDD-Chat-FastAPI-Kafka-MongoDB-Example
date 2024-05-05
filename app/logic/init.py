@@ -44,6 +44,8 @@ from logic.events.messages import (
 from logic.mediator.base import Mediator
 from logic.mediator.event import EventMediator
 from logic.queries.messages import (
+    GetAllChatsQuery,
+    GetAllChatsQueryHandler,
     GetChatDetailQuery,
     GetChatDetailQueryHandler,
     GetMessagesQuery,
@@ -64,7 +66,7 @@ def _init_container() -> Container:
 
     config: Config = container.resolve(Config)
 
-    def create_mongodb_client():
+    def create_mongodb_client() -> AsyncIOMotorClient:
         return AsyncIOMotorClient(
             config.mongodb_connection_uri,
             serverSelectionTimeoutMS=3000,
@@ -108,6 +110,7 @@ def _init_container() -> Container:
 
     container.register(GetChatDetailQueryHandler)
     container.register(GetMessagesQueryHandler)
+    container.register(GetAllChatsQueryHandler)
 
     def create_message_broker() -> BaseMessageBroker:
         return KafkaMessageBroker(
@@ -192,6 +195,10 @@ def _init_container() -> Container:
         mediator.register_query(
             GetMessagesQuery,
             container.resolve(GetMessagesQueryHandler),
+        )
+        mediator.register_query(
+            GetAllChatsQuery,
+            container.resolve(GetAllChatsQueryHandler),
         )
 
         return mediator
