@@ -14,7 +14,7 @@ async def test_create_chat_command_success(
     chat_repository: BaseChatsRepository,
     mediator: Mediator,
     faker: Faker,
-):
+) -> None:
     chat: Chat
     chat, *_ = await mediator.handle_command(
         CreateChatCommand(title=faker.text(max_nb_chars=50)),
@@ -30,7 +30,7 @@ async def test_create_chat_command_title_already_exists(
     chat_repository: BaseChatsRepository,
     mediator: Mediator,
     faker: Faker,
-):
+) -> None:
     title_text = faker.text()
     chat = Chat(title=Title(title_text))
     await chat_repository.add_chat(chat)

@@ -1,9 +1,9 @@
-from fastapi import (
-    Depends,
+from fastapi.param_functions import Depends
+from fastapi.routing import APIRouter
+from starlette.websockets import (
+    WebSocket,
     WebSocketDisconnect,
 )
-from fastapi.routing import APIRouter
-from fastapi.websockets import WebSocket
 
 from punq import Container
 

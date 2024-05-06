@@ -1,9 +1,12 @@
-from fastapi import (
-    Depends,
-    status,
-)
 from fastapi.exceptions import HTTPException
+from fastapi.param_functions import Depends
 from fastapi.routing import APIRouter
+from starlette.status import (
+    HTTP_200_OK,
+    HTTP_201_CREATED,
+    HTTP_400_BAD_REQUEST,
+    HTTP_404_NOT_FOUND,
+)
 
 from punq import Container
 
@@ -22,6 +25,7 @@ from application.api.messages.schemas import (
     MessageDetailSchema,
 )
 from application.api.schemas import ErrorSchema
+from domain.entities.messages import Chat, Message
 from domain.exceptions.base import ApplicationException
 from logic.commands.messages import (
     CreateChatCommand,
@@ -40,11 +44,11 @@ router = APIRouter(tags=["Chat"])
 
 @router.post(
     "/",
-    status_code=status.HTTP_201_CREATED,
+    status_code=HTTP_201_CREATED,
     description="Create new chat, if chat with that title already exists - return 400",
     responses={
-        status.HTTP_201_CREATED: {"model": CreateChatResponseSchema},
-        status.HTTP_400_BAD_REQUEST: {"model": ErrorSchema},
+        HTTP_201_CREATED: {"model": CreateChatResponseSchema},
+        HTTP_400_BAD_REQUEST: {"model": ErrorSchema},
     },
 )
 async def create_chat_handler(
@@ -53,13 +57,14 @@ async def create_chat_handler(
 ) -> CreateChatResponseSchema:
     """Create new chat."""
     mediator: Mediator = container.resolve(Mediator)
+    chat: Chat
 
     try:
         chat, *_ = await mediator.handle_command(CreateChatCommand(title=schema.title))
 
     except ApplicationException as exception:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=HTTP_400_BAD_REQUEST,
             detail={"error": exception.message},
         ) from exception
 
@@ -68,11 +73,11 @@ async def create_chat_handler(
 
 @router.post(
     "/{chat_oid}/messages/",
-    status_code=status.HTTP_201_CREATED,
+    status_code=HTTP_201_CREATED,
     description="Add new message in chat by chat_oid",
     responses={
-        status.HTTP_201_CREATED: {"model": CreateMessageRequestSchema},
-        status.HTTP_400_BAD_REQUEST: {"model": ErrorSchema},
+        HTTP_201_CREATED: {"model": CreateMessageRequestSchema},
+        HTTP_400_BAD_REQUEST: {"model": ErrorSchema},
     },
 )
 async def create_message_handler(
@@ -82,6 +87,7 @@ async def create_message_handler(
 ) -> CreateMessageResponseSchema:
     """Add new message in chat."""
     mediator: Mediator = container.resolve(Mediator)
+    message: Message
 
     try:
         message, *_ = await mediator.handle_command(
@@ -89,7 +95,7 @@ async def create_message_handler(
         )
     except ApplicationException as exception:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=HTTP_400_BAD_REQUEST,
             detail={"error": exception.message},
         ) from exception
 
@@ -98,11 +104,11 @@ async def create_message_handler(
 
 @router.get(
     "/{chat_oid}/",
-    status_code=status.HTTP_200_OK,
+    status_code=HTTP_200_OK,
     description="Get chat by chat_oid",
     responses={
-        status.HTTP_200_OK: {"model": ChatDetailSchema},
-        status.HTTP_404_NOT_FOUND: {"model": ErrorSchema},
+        HTTP_200_OK: {"model": ChatDetailSchema},
+        HTTP_404_NOT_FOUND: {"model": ErrorSchema},
     },
 )
 async def get_chat_handler(
@@ -111,12 +117,13 @@ async def get_chat_handler(
 ) -> ChatDetailSchema:
     """Get chat by chat_oid."""
     mediator: Mediator = container.resolve(Mediator)
+    chat: Chat
 
     try:
         chat = await mediator.handle_query(GetChatDetailQuery(chat_oid=chat_oid))
     except ApplicationException as exception:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=HTTP_400_BAD_REQUEST,
             detail={"error": exception.message},
         ) from exception
 
@@ -125,11 +132,11 @@ async def get_chat_handler(
 
 @router.get(
     "/{chat_oid}/messages/",
-    status_code=status.HTTP_200_OK,
+    status_code=HTTP_200_OK,
     description="Get messages in chat by chat_oid",
     responses={
-        status.HTTP_200_OK: {"model": GetMessagesQueryResponseSchema},
-        status.HTTP_404_NOT_FOUND: {"model": ErrorSchema},
+        HTTP_200_OK: {"model": GetMessagesQueryResponseSchema},
+        HTTP_404_NOT_FOUND: {"model": ErrorSchema},
     },
 )
 async def get_chat_messages_handler(
@@ -139,6 +146,8 @@ async def get_chat_messages_handler(
 ) -> GetMessagesQueryResponseSchema:
     """Get messages in chat by chat_oid."""
     mediator: Mediator = container.resolve(Mediator)
+    messages: list[Message]
+    count: int
 
     try:
         messages, count = await mediator.handle_query(
@@ -146,7 +155,7 @@ async def get_chat_messages_handler(
         )
     except ApplicationException as exception:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=HTTP_400_BAD_REQUEST,
             detail={"error": exception.message},
         ) from exception
 
@@ -160,11 +169,11 @@ async def get_chat_messages_handler(
 
 @router.get(
     "/",
-    status_code=status.HTTP_200_OK,
+    status_code=HTTP_200_OK,
     description="Get all open on this moment chats",
     responses={
-        status.HTTP_200_OK: {"model": GetAllChatsQueryResponseSchema},
-        status.HTTP_404_NOT_FOUND: {"model": ErrorSchema},
+        HTTP_200_OK: {"model": GetAllChatsQueryResponseSchema},
+        HTTP_404_NOT_FOUND: {"model": ErrorSchema},
     },
     summary="Get all open on this moment chats",
 )
@@ -174,6 +183,8 @@ async def get_all_chats_handler(
 ) -> GetAllChatsQueryResponseSchema:
     """Get all open on this moment chats."""
     mediator: Mediator = container.resolve(Mediator)
+    chats: list[Chat]
+    count: int
 
     try:
         chats, count = await mediator.handle_query(
@@ -181,7 +192,7 @@ async def get_all_chats_handler(
         )
     except ApplicationException as exception:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=HTTP_400_BAD_REQUEST,
             detail={"error": exception.message},
         ) from exception
 

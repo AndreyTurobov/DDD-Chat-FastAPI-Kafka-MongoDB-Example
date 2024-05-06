@@ -4,7 +4,7 @@ from abc import (
 )
 from dataclasses import dataclass
 
-from infra.integrations.notifications.dots import Notification
+from infra.integrations.notifications.dtos import Notification
 
 
 @dataclass
@@ -13,4 +13,4 @@ class BaseNotificationClient(ABC):
     async def _format_notification(self, notification: Notification) -> str: ...
 
     @abstractmethod
-    async def send(self, notification: Notification) -> None: ...
+    async def send(self, notification: Notification): ...

@@ -1,8 +1,8 @@
+from collections.abc import AsyncIterator
 from dataclasses import dataclass
-from typing import AsyncIterator
 
-from aiokafka import AIOKafkaConsumer
-from aiokafka.producer import AIOKafkaProducer
+from aiokafka.consumer.consumer import AIOKafkaConsumer
+from aiokafka.producer.producer import AIOKafkaProducer
 import orjson
 
 from infra.message_brokers.base import BaseMessageBroker

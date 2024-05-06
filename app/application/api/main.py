@@ -1,8 +1,8 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi.applications import FastAPI
 
-from aiojobs import Scheduler
+from aiojobs._scheduler import Scheduler
 from punq import Container
 
 from application.api.lifespan import (

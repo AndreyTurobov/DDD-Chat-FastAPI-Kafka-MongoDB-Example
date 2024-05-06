@@ -6,7 +6,7 @@ from dataclasses import (
 from datetime import datetime
 from typing import ClassVar
 
-from uuid_extensions import uuid7str
+from uuid_extensions.uuid7 import uuid7str
 
 
 @dataclass

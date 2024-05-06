@@ -6,7 +6,7 @@ from dataclasses import (
 )
 from datetime import datetime
 
-from uuid_extensions import uuid7str
+from uuid_extensions.uuid7 import uuid7str
 
 from domain.events.base import BaseEvent
 

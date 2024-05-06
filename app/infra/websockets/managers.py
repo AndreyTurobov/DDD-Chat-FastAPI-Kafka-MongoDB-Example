@@ -8,7 +8,7 @@ from dataclasses import (
     field,
 )
 
-from fastapi import WebSocket
+from starlette.websockets import WebSocket
 
 
 @dataclass
