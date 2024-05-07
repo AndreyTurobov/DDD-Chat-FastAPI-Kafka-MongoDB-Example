@@ -18,9 +18,7 @@ async def consume_in_background() -> None:
 
     mediator: Mediator = container.resolve(Mediator)
 
-    async for msg in (
-        message_broker.start_consuming(config.new_message_received_topic),
-    ):
+    async for msg in message_broker.start_consuming(config.new_message_received_topic):
         await mediator.publish(
             [
                 NewMessageReceivedFromBrokerEvent(

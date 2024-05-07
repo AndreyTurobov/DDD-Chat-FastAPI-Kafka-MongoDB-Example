@@ -18,7 +18,7 @@ async def websocket_endpoint(
     websocket: WebSocket,
     chat_oid: str,
     container: Container = Depends(init_container),
-):
+) -> None:
     connection_manager: BaseConnectionManager = container.resolve(BaseConnectionManager)
     await connection_manager.accept_connection(websocket=websocket, key=chat_oid)
 

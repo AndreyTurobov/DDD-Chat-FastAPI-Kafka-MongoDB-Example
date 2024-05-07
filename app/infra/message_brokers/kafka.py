@@ -13,7 +13,7 @@ class KafkaMessageBroker(BaseMessageBroker):
     producer: AIOKafkaProducer
     consumer: AIOKafkaConsumer
 
-    async def send_message(self, key: str, topic: str, value: bytes) -> None:
+    async def send_message(self, key: bytes, topic: str, value: bytes) -> None:
         await self.producer.send(topic=topic, key=key, value=value)
 
     async def start_consuming(self, topic: str) -> AsyncIterator[dict]:

@@ -2,7 +2,10 @@ from abc import ABC
 from collections.abc import Iterable
 from dataclasses import dataclass
 
-from motor.core import AgnosticClient
+from motor.core import (
+    AgnosticClient,
+    AgnosticCollection,
+)
 
 from domain.entities.messages import (
     Chat,
@@ -31,7 +34,7 @@ class BaseMongoDBRepository(ABC):
     mongo_db_collection_name: str
 
     @property
-    def _collection(self):
+    def _collection(self) -> AgnosticCollection:
         return self.mongo_db_client[self.mongo_db_db_name][
             self.mongo_db_collection_name
         ]
@@ -54,7 +57,8 @@ class MongoDBChatsRepository(BaseChatsRepository, BaseMongoDBRepository):
         await self._collection.insert_one(convert_chat_entity_to_document(chat))
 
     async def get_all_chats(
-        self, filters: GetAllChatsFilters
+        self,
+        filters: GetAllChatsFilters,
     ) -> tuple[Iterable[Chat], int]:
         cursor = self._collection.find().skip(filters.offset).limit(filters.limit)
 

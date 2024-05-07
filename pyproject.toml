@@ -126,13 +126,34 @@ section-order = [
 convention = "google"
 
 [tool.mypy]
-disallow_untyped_defs = true
-disallow_any_unimported = true
-no_implicit_optional = true
+mypy_path = "app"
+exclude = "tests"
+
+# Ensure full coverage
 check_untyped_defs = true
+disallow_untyped_calls = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+
+# Explicit is better than implicit
+no_implicit_optional = true
+
+# Restrict dynamic typing
+disallow_any_generics = true
+disallow_subclassing_any = true
 warn_return_any = true
+
+# Know exactly what you're doing
+warn_redundant_casts = true
+warn_unreachable = true
+warn_unused_configs = true
 warn_unused_ignores = true
 show_error_codes = true
+
+# It's too difficult for me so far
+ignore_missing_imports  = true
+
 plugins = [
     "pydantic.mypy",
 ]
