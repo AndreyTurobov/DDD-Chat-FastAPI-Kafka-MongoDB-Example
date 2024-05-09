@@ -28,6 +28,9 @@ class BaseChatsRepository(ABC):
         self, filters: GetMessagesFilters
     ) -> tuple[Iterable[Chat], int]: ...
 
+    @abstractmethod
+    async def delete_chat_by_oid(self, chat_oid: str) -> None: ...
+
 
 @dataclass
 class BaseMessagesRepository(ABC):

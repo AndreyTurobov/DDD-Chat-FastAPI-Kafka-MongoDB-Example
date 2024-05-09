@@ -4,8 +4,10 @@ from fastapi.routing import APIRouter
 from starlette.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND,
+    HTTP_422_UNPROCESSABLE_ENTITY,
 )
 
 from punq import Container
@@ -25,11 +27,15 @@ from application.api.messages.schemas import (
     MessageDetailSchema,
 )
 from application.api.schemas import ErrorSchema
-from domain.entities.messages import Chat, Message
+from domain.entities.messages import (
+    Chat,
+    Message,
+)
 from domain.exceptions.base import ApplicationException
 from logic.commands.messages import (
     CreateChatCommand,
     CreateMessageCommand,
+    GetForDeleteChatCommand,
 )
 from logic.init import init_container
 from logic.mediator.base import Mediator
@@ -128,6 +134,31 @@ async def get_chat_handler(
         ) from exception
 
     return ChatDetailSchema.from_entity(chat)
+
+
+@router.delete(
+    "/{chat_oid}/",
+    status_code=HTTP_204_NO_CONTENT,
+    description="Delete chat by chat_oid",
+    responses={
+        HTTP_204_NO_CONTENT: {"model": None},
+        HTTP_404_NOT_FOUND: {"model": ErrorSchema},
+    },
+)
+async def delete_chat_handler(
+    chat_oid: str,
+    container: Container = Depends(init_container),
+) -> None:
+    """Delete chat by chat_oid."""
+    mediator: Mediator = container.resolve(Mediator)
+
+    try:
+        await mediator.handle_command(GetForDeleteChatCommand(chat_oid=chat_oid))
+    except ApplicationException as exception:
+        raise HTTPException(
+            status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+            detail={"error": exception.message},
+        ) from exception
 
 
 @router.get(

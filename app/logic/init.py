@@ -12,6 +12,7 @@ from punq import (
 )
 
 from domain.events.messages import (
+    ChatDeleteEvent,
     NewChatCreatedEvent,
     NewMessageReceivedEvent,
 )
@@ -34,8 +35,11 @@ from logic.commands.messages import (
     CreateChatCommandHandler,
     CreateMessageCommand,
     CreateMessageCommandHandler,
+    DeleteChatCommandHandler,
+    GetForDeleteChatCommand,
 )
 from logic.events.messages import (
+    DeleteChatEventHandler,
     NewChatCreatedEventHandler,
     NewMessageReceivedEventHandler,
     NewMessageReceivedFromBrokerEvent,
@@ -107,6 +111,7 @@ def _init_container() -> Container:
 
     container.register(CreateChatCommandHandler)
     container.register(CreateMessageCommandHandler)
+    container.register(DeleteChatCommandHandler)
 
     container.register(GetChatDetailQueryHandler)
     container.register(GetMessagesQueryHandler)
@@ -150,6 +155,11 @@ def _init_container() -> Container:
             message_repository=container.resolve(BaseMessagesRepository),
             chats_repository=container.resolve(BaseChatsRepository),
         )
+        delete_chat_handler = DeleteChatCommandHandler(
+            _mediator=mediator,
+            message_repository=container.resolve(BaseMessagesRepository),
+            chats_repository=container.resolve(BaseChatsRepository),
+        )
         new_chat_created_event_handler = NewChatCreatedEventHandler(
             broker_topic=config.new_chats_event_topic,
             message_broker=container.resolve(BaseMessageBroker),
@@ -167,7 +177,13 @@ def _init_container() -> Container:
                 connection_manager=container.resolve(BaseConnectionManager),
             )
         )
+        delete_chat_event_handler = DeleteChatEventHandler(
+            message_broker=container.resolve(BaseMessageBroker),
+            broker_topic=config.chat_deleted_event_topic,
+            connection_manager=container.resolve(BaseConnectionManager),
+        )
 
+        # Events
         mediator.register_event(
             NewChatCreatedEvent,
             [new_chat_created_event_handler],
@@ -180,6 +196,11 @@ def _init_container() -> Container:
             NewMessageReceivedFromBrokerEvent,
             [new_message_received_from_broker_event_handler],
         )
+        mediator.register_event(
+            ChatDeleteEvent,
+            [delete_chat_event_handler],
+        )
+        # Commands
         mediator.register_command(
             CreateChatCommand,
             [create_chat_handler],
@@ -188,6 +209,11 @@ def _init_container() -> Container:
             CreateMessageCommand,
             [create_message_handler],
         )
+        mediator.register_command(
+            GetForDeleteChatCommand,
+            [delete_chat_handler],
+        )
+        # Queries
         mediator.register_query(
             GetChatDetailQuery,
             container.resolve(GetChatDetailQueryHandler),

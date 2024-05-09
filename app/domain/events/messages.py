@@ -19,3 +19,10 @@ class NewChatCreatedEvent(BaseEvent):
 
     chat_oid: str
     chat_title: str
+
+
+@dataclass
+class ChatDeleteEvent(BaseEvent):
+    title: ClassVar[str] = "Chat Deleted"
+
+    chat_oid: str
