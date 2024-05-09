@@ -1,12 +1,14 @@
-**/.git
+.git
 .gitignore
 
-**/.mypy_cache
-**/.pytest_cache
-**/.ruff_cache
+__pycache__
+
+.mypy_cache
+.pytest_cache
+.ruff_cache
 
 Dockerfile
-**/docker_compose
+docker_compose
 .dockerignore
 
 .idea
