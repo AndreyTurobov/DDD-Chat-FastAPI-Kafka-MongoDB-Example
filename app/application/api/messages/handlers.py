@@ -139,6 +139,7 @@ async def get_chat_handler(
 @router.delete(
     "/{chat_oid}/",
     status_code=HTTP_204_NO_CONTENT,
+    summary="Delete chat after conversation ends",
     description="Delete chat by chat_oid",
     responses={
         HTTP_204_NO_CONTENT: {"model": None},
