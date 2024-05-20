@@ -34,9 +34,7 @@ class BaseConnectionManager(ABC):
 
 @dataclass
 class ConnectionManager(BaseConnectionManager):
-    lock_map: dict[str, asyncio.Lock] = field(
-        default_factory=dict,
-    )
+    lock_map: dict[str, asyncio.Lock] = field(default_factory=dict)
 
     async def accept_connection(self, websocket: WebSocket, key: str) -> None:
         await websocket.accept()
@@ -60,6 +58,8 @@ class ConnectionManager(BaseConnectionManager):
         async with self.lock_map[key]:
             for websocket in self.connections_map[key]:
                 await websocket.send_json(
-                    {"message": "Chat was deleted"},
+                    {
+                        "message": "Chat was deleted",
+                    }
                 )
                 await websocket.close()
