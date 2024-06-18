@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from domain.entities.messages import (
     Chat,
+    ChatListener,
     Message,
 )
 from infra.repositories.filters.messages import (
@@ -34,6 +35,11 @@ class GetMessagesQuery(BaseQuery):
 @dataclass(frozen=True)
 class GetAllChatsQuery(BaseQuery):
     filters: GetAllChatsFilters
+
+
+@dataclass(frozen=True)
+class GetAllChatsListenersQuery(BaseQuery):
+    chat_oid: str
 
 
 @dataclass(frozen=True)
@@ -69,3 +75,20 @@ class GetAllChatsQueryHandler(
 
     async def handle(self, query: GetAllChatsQuery) -> tuple[Iterable[Chat], int]:
         return await self.chats_repository.get_all_chats(filters=query.filters)
+
+
+@dataclass(frozen=True)
+class GetAllChatsListenersQueryHandler(
+    BaseQueryHandler[GetAllChatsListenersQuery, Iterable[ChatListener]]
+):
+    chats_repository: BaseChatsRepository
+
+    async def handle(self, query: GetAllChatsListenersQuery) -> Iterable[ChatListener]:
+        chat = await self.chats_repository.get_chat_by_oid(oid=query.chat_oid)
+
+        if not chat:
+            raise ChatNotFoundException(chat_oid=query.chat_oid)
+
+        return await self.chats_repository.get_all_chat_listeners(
+            chat_oid=query.chat_oid
+        )

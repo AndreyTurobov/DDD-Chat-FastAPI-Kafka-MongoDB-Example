@@ -90,3 +90,13 @@ class AddTelegramListenerResponseSchema(BaseModel):
     @classmethod
     def from_entity(cls, listener: ChatListener) -> "AddTelegramListenerResponseSchema":
         return cls(listener_id=listener.oid)
+
+
+class ChatListenerListItemSchema(BaseModel):
+    oid: str
+
+    @classmethod
+    def from_entity(cls, chat_listener: ChatListener) -> "ChatListenerListItemSchema":
+        return cls(
+            oid=chat_listener.oid,
+        )

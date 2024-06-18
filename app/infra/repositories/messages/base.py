@@ -7,6 +7,7 @@ from dataclasses import dataclass
 
 from domain.entities.messages import (
     Chat,
+    ChatListener,
     Message,
 )
 from infra.repositories.filters.messages import GetMessagesFilters
@@ -36,19 +37,14 @@ class BaseChatsRepository(ABC):
         self, chat_oid: str, telegram_chat_id: str
     ) -> None: ...
 
+    @abstractmethod
+    async def get_all_chat_listeners(self, chat_oid: str) -> Iterable[ChatListener]: ...
+
 
 @dataclass
 class BaseMessagesRepository(ABC):
     @abstractmethod
     async def add_message(self, message: Message) -> None: ...
-
-    # @abstractmethod
-    # async def get_messages_by_chat_oid(self, chat_oid: str) -> Iterable[Message]:
-    #     ...
-    #
-    # @abstractmethod
-    # async def get_messages_by_text(self, text: str) -> Iterable[Message]:
-    #     ...
 
     @abstractmethod
     async def get_messages(
