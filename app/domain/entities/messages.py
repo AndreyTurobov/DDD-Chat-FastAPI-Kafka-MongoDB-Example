@@ -11,7 +11,10 @@ from domain.events.messages import (
     NewMessageReceivedEvent,
 )
 from domain.exceptions.chats import ListenerAlreadyExistsException
-from domain.values.messages import Text, Title
+from domain.values.messages import (
+    Text,
+    Title,
+)
 
 
 @dataclass(eq=False)

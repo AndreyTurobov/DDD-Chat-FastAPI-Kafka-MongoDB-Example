@@ -34,3 +34,5 @@ RUN apt update -y && \
 
 # Копирование кода приложения
 COPY /app/ /app/**
+
+EXPOSE 8000

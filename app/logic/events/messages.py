@@ -20,7 +20,7 @@ class NewChatCreatedEventHandler(EventHandler[NewChatCreatedEvent, None]):
         await self.message_broker.send_message(
             topic=self.broker_topic,
             value=convert_event_to_broker_message(event=event),
-            key=event.chat_oid.encode(),
+            key=str(event.event_id).encode(),
         )
 
 
@@ -73,19 +73,3 @@ class DeleteChatEventHandler(EventHandler[ChatDeleteEvent, None]):
             key=event.chat_oid.encode(),
         )
         await self.connection_manager.disconnect_all(key=event.chat_oid)
-
-
-@dataclass
-class ChatDeleteFromBrokerEvent(IntegrationEvent):
-    event_title: ClassVar[str] = "Chat Delete From Broker"
-
-    chat_oid: str
-
-
-@dataclass
-class DeleteChatFromBrokerEventHandler(EventHandler[ChatDeleteFromBrokerEvent, None]):
-    async def handle(self, event: ChatDeleteFromBrokerEvent) -> None:
-        await self.connection_manager.send_all(
-            key=event.chat_oid,
-            bytes_=convert_event_to_broker_message(event=event),
-        )

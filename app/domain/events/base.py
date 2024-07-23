@@ -17,7 +17,7 @@ class BaseEvent(ABC):
         default_factory=lambda: uuid7str(),
         kw_only=True,
     )
-    created_at: datetime = field(
+    occurred_at: datetime = field(
         default_factory=datetime.now,
         kw_only=True,
     )

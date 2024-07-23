@@ -31,6 +31,7 @@ async def websocket_endpoint(
         await websocket.accept()
         await websocket.send_json(data={"error": error.message})
         await websocket.close()
+        return
 
     await connection_manager.accept_connection(websocket=websocket, key=chat_oid)
 
