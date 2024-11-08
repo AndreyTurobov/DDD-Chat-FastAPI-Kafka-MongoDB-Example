@@ -1,4 +1,4 @@
-DC = docker-compose
+DC = docker compose
 EXEC = docker exec -it
 LOGS = docker logs
 ENV = --env-file .env
