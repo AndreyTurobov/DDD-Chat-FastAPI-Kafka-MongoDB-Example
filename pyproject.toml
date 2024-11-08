@@ -17,6 +17,7 @@ orjson = "^3.10.1"
 websockets = "^12.0"
 aiojobs = "^1.2.1"
 httpx = "^0.27.0"
+setuptools = "^75.3.0"
 
 [tool.poetry.dev-dependencies]
 ipython = "^8.22.2"
