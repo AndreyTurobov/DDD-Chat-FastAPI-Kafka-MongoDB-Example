@@ -31,6 +31,9 @@ services:
       - backend
     healthcheck:
       test: nc -z localhost 29092
+      interval: 5s
+      timeout: 2s
+      retries: 20
 
   kafka-ui:
     image: provectuslabs/kafka-ui
